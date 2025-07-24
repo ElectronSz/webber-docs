@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Welcome to Webber Web Server</title>
+    <title>Webber Web Server :: Documentation</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
       body {
@@ -36,12 +36,12 @@
         Webber Web Server
       </h1>
       <p class="text-lg text-gray-700 mb-8 max-w-2xl mx-auto">
-        This is the default welcome page for your Go-powered Webber web server.
+        This is the documentation for our Go-powered web server.
       </p>
 
       <!-- About Webber Section -->
       <div class="mt-8 pt-6 border-t-2 border-orange-300">
-        <h2 class="text-3xl font-bold text-orange-500 mb-4">About Webber</h2>
+        <!-- <h2 class="text-3xl font-bold text-orange-500 mb-4">Why Webber?</h2> -->
         <p class="text-gray-700 mb-6 leading-relaxed">
           Webber is a modern, high-performance Go web server inspired by Nginx, with support for static file hosting (optimized for Vue.js, React, Angular, and other SPA builds), reverse proxying, WebSocket, rate limiting, gzip compression, in-memory caching, HTTP/2, and TLS.
         </p>
@@ -133,16 +133,31 @@
         <h3 class="text-left text-2xl font-semibold text-orange-400 mb-4">1. Installation</h3>
         <pre
           class="bg-gray-800 text-green-400 p-4 rounded-lg text-left text-sm overflow-x-auto mb-8 shadow-inner"
-          ><code>sudo ./install.sh</code></pre>
+          ><code>curl -sSL https://webber-docs.vercel.app/webber.sh | sudo bash</code></pre>
         <p class="text-gray-700 text-left mb-4 leading-relaxed">
-          The provided install script automates the setup process, performing the following actions:
-        </p>
-        <ul class="list-disc list-inside max-w-xl text-left text-gray-700 space-y-1 mb-6">
-          <li>Clones the repository from GitHub.</li>
-          <li>Builds the Go binary for the server.</li>
-          <li>Copies necessary configuration and static files to their respective locations.</li>
-          <li>Sets up the systemd service for easy management and ensures TLS certificates are in place.</li>
-        </ul>
+  The provided install script automates the setup process, performing the following actions:
+</p>
+<ul class="list-disc list-inside max-w-xl text-left text-gray-700 space-y-1 mb-6">
+  <li>Creates a dedicated system user and group <code class="bg-orange-100 text-orange-800 px-2 py-1 rounded-md text-sm font-mono"
+              >webber</code> for enhanced security.</li>
+  <li>Sets up essential directories for configuration <code class="bg-orange-100 text-orange-800 px-2 py-1 rounded-md text-sm font-mono"
+              >/etc/webber</code> and static files  <code class="bg-orange-100 text-orange-800 px-2 py-1 rounded-md text-sm font-mono"
+              >/var/www/webber</code>.</li>
+  <li>Downloads pre-built Webber binary and installs it to  <code class="bg-orange-100 text-orange-800 px-2 py-1 rounded-md text-sm font-mono"
+              >/usr/local/bin</code>.</li>
+  <li>Generates a default <code class="bg-orange-100 text-orange-800 px-2 py-1 rounded-md text-sm font-mono"
+              >config.json</code> file in <code class="bg-orange-100 text-orange-800 px-2 py-1 rounded-md text-sm font-mono"
+              >/etc/webber</code> with common settings.</li>
+  <li>Prepares for static file serving by creating a symlink from <code class="bg-orange-100 text-orange-800 px-2 py-1 rounded-md text-sm font-mono"
+              >/etc/webber/static</code>  to <code class="bg-orange-100 text-orange-800 px-2 py-1 rounded-md text-sm font-mono"
+              >/var/www/webber</code>.</li>
+  <li>Generates self-signed TLS certificates <code class="bg-orange-100 text-orange-800 px-2 py-1 rounded-md text-sm font-mono"
+              >cert.pem</code> and <code class="bg-orange-100 text-orange-800 px-2 py-1 rounded-md text-sm font-mono"
+              >key.pem</code> for HTTPS, if not already present.</li>
+  <li>Grants necessary network binding capabilities to the Webber binary for privileged ports <code class="bg-orange-100 text-orange-800 px-2 py-1 rounded-md text-sm font-mono"
+              >443</code>.</li>
+  <li>Configures and starts a systemd service to manage the Webber server, ensuring it runs automatically and restarts on failure.</li>
+</ul>
         
 
         <h3 class="text-2xl text-left font-semibold text-orange-400 mb-4">2. Configuration</h3>
@@ -267,15 +282,30 @@ sudo journalctl -u webber       # View the logs for the Webber service</code></p
       </div>
 
       <!-- Contributing Section -->
-      <div class="mt-10 pt-6 border-t-2 border-orange-300">
-        <h2 class="text-3xl font-bold text-orange-500 mb-4">Contributing</h2>
-        <p class="text-gray-700 mb-6 leading-relaxed">
-          Contributions, bug reports, and feature requests are highly welcome! Please feel free to open a Pull Request (PR) or submit an issue on the GitHub repository.
-        </p>
-      </div>
+    <div class="mt-10 pt-6 border-t-2 border-orange-300">
+  <h2 class="text-3xl font-bold text-orange-500 mb-4">Contributing</h2>
+  <p class="text-gray-700 mb-6 leading-relaxed">
+    Contributions, bug reports, and feature requests are highly welcome!
+    <br>
+    Please feel free to <a href="https://github.com/ElectronSz/webber/pulls" class="text-blue-600 hover:text-blue-800 font-medium underline transition duration-300 ease-in-out" target="_blank">open a Pull Request (PR)</a> or
+    <a href="https://github.com/ElectronSz/webber/issues" class="text-blue-600 hover:text-blue-800 font-medium underline transition duration-300 ease-in-out" target="_blank">submit an issue</a> on the GitHub repository.
+  </p>
+</div>
 
       <!-- Footer -->
-     <p class="text-sm text-gray-600 mt-10">Built in Eswatini with ❤️ by <a href="https://github.com/ElectronSz" class="text-blue-600 hover:text-blue-800 font-medium underline transition duration-300 ease-in-out">ElectronSz</a>.</p>
+    <p class="text-sm text-gray-600 mt-10">
+  Built in Eswatini with ❤️ by <a href="https://github.com/ElectronSz" class="text-blue-600 hover:text-blue-800 font-medium underline transition duration-300 ease-in-out">ElectronSz</a>.
+ 
+  
+</p>
+<p class="text-sm text-gray-600 mt-1">
+    GitHub Repo: <a href="https://github.com/ElectronSz/webber" class="text-blue-600 hover:text-blue-800 font-medium underline transition duration-300 ease-in-out">https://github.com/ElectronSz/webber</a> |
+  Version: <a href="https://github.com/ElectronSz/webber/releases/tag/v1.0.3" class="text-blue-600 hover:text-blue-800 font-medium underline transition duration-300 ease-in-out">v1.0.3</a>
+</p>
+      <p class="text-xs text-gray-500 mt-2">
+        This documentation is generated automatically from the Webber source code and is subject to change with each release.
+      </p>
+      
     </div>
   </body>
 </html>
