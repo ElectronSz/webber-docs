@@ -11,6 +11,12 @@ GROUP="webber"
 WEBBER_BINARY_URL="https://github.com/ElectronSz/webber/releases/download/v1.0.3/webber"
 TMP_DOWNLOAD_DIR="/tmp"
 
+# URLs for the default static files
+INDEX_HTML_URL="https://raw.githubusercontent.com/ElectronSz/webber/main/static/index.html"
+LOGO_PNG_URL="https://raw.githubusercontent.com/ElectronSz/webber/main/static/logo.png"
+STYLE_CSS_URL="https://raw.githubusercontent.com/ElectronSz/webber/main/static/style.css"
+
+
 # Ensure script is run as root
 if [ "$EUID" -ne 0 ]; then
   echo "Please run as root (sudo)"
@@ -85,6 +91,36 @@ fi
 chown -R "$USER:$GROUP" "$CONFIG_DIR/static" # Ensure the symlink target has correct permissions
 chmod -R 755 "$CONFIG_DIR/static"
 
+# --- UPDATED: Download default static content if the static directory is empty ---
+echo "Checking for default static content in $STATIC_DIR..."
+if [ -z "$(ls -A "$STATIC_DIR")" ]; then
+  echo "Static directory is empty. Downloading default web content."
+
+  # Download index.html
+  echo "Downloading index.html..."
+  wget -q -O "$STATIC_DIR/index.html" "$INDEX_HTML_URL"
+  if [ $? -ne 0 ]; then echo "Failed to download index.html"; exit 1; fi
+
+  # Download logo.png
+  echo "Downloading logo.png..."
+  wget -q -O "$STATIC_DIR/logo.png" "$LOGO_PNG_URL"
+  if [ $? -ne 0 ]; then echo "Failed to download logo.png"; exit 1; fi
+
+  # Download style.css
+  echo "Downloading style.css..."
+  wget -q -O "$STATIC_DIR/style.css" "$STYLE_CSS_URL"
+  if [ $? -ne 0 ]; then echo "Failed to download style.css"; exit 1; fi
+
+  # Set ownership and permissions for the downloaded files
+  chown "$USER:$GROUP" "$STATIC_DIR/index.html" "$STATIC_DIR/logo.png" "$STATIC_DIR/style.css"
+  chmod 644 "$STATIC_DIR/index.html" "$STATIC_DIR/style.css"
+  chmod 644 "$STATIC_DIR/logo.png" # Images typically need 644
+
+  echo "Default web content downloaded successfully."
+else
+  echo "Static directory is not empty. Skipping default web content download."
+fi
+# --- END UPDATED SECTION ---
 
 # Generate self-signed certificates if not provided
 echo "Checking for TLS certificates..."
